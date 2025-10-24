@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Akhuwat College Principal App</title>
+    <title>Acdemic Management System</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -129,13 +129,43 @@
                 transform: translateX(0);
             }
         }
+        
+        /* Auth Tabs */
+        .auth-tabs {
+            display: flex;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 1.5rem;
+        }
+        
+        .auth-tab {
+            flex: 1;
+            padding: 0.75rem;
+            text-align: center;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .auth-tab.active {
+            border-bottom-color: #8b5cf6;
+            color: #8b5cf6;
+            font-weight: 600;
+        }
+        
+        .auth-form {
+            display: none;
+        }
+        
+        .auth-form.active {
+            display: block;
+        }
     </style>
 </head>
 <body class="bg-gray-50 font-sans">
     <!-- Mobile Menu Overlay -->
     <div id="mobileOverlay" class="fixed inset-0 mobile-menu-overlay z-40 hidden md:hidden"></div>
     
-    <!-- Login Screen -->
+    <!-- Login/Signup Screen -->
     <div id="loginScreen" class="min-h-screen flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
             <div class="text-center mb-8">
@@ -146,26 +176,63 @@
                     </svg>
                 </div>
                 <h1 class="text-3xl font-bold text-gray-800 mb-2">Akhuwat College Kasur</h1>
-                <p class="text-gray-600">Principal Management System</p>
+                <p class="text-gray-600">Acdemic Management System</p>
             </div>
-            <form id="loginForm" class="space-y-6">
+            
+            <!-- Auth Tabs -->
+            <div class="auth-tabs">
+                <div class="auth-tab active" onclick="showAuthTab('login')">Login</div>
+                <div class="auth-tab" onclick="showAuthTab('signup')">Sign Up</div>
+            </div>
+            
+            <!-- Login Form -->
+            <form id="loginForm" class="auth-form active space-y-6">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Username</label>
-                    <input type="text" id="username" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter username" required>
+                    <input type="text" id="loginUsername" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter username" required>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
-                    <input type="password" id="password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter password" required>
+                    <input type="password" id="loginPassword" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter password" required>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Role</label>
-                    <select id="role" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <select id="loginRole" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="principal">Principal</option>
                         <option value="teacher">Teacher</option>
                         <option value="admin">Admin</option>
                     </select>
                 </div>
                 <button type="submit" class="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-3 rounded-lg hover:from-purple-600 hover:to-pink-600 transition duration-200 font-medium">Login</button>
+            </form>
+            
+            <!-- Signup Form -->
+            <form id="signupForm" class="auth-form space-y-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                    <input type="text" id="signupName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter full name" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+                    <input type="text" id="signupUsername" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Choose username" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                    <input type="password" id="signupPassword" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Create password" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
+                    <input type="password" id="signupConfirmPassword" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Confirm password" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Role</label>
+                    <select id="signupRole" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="principal">Principal</option>
+                        <option value="teacher">Teacher</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-3 rounded-lg hover:from-blue-600 hover:to-indigo-600 transition duration-200 font-medium">Create Account</button>
             </form>
         </div>
     </div>
@@ -181,7 +248,7 @@
                 </div>
                 <div>
                     <h1 class="text-xl font-bold">Akhuwat College Kasur</h1>
-                    <p class="text-sm opacity-80">Principal Dashboard</p>
+                    <p class="text-sm opacity-80">Academic Portal</p>
                 </div>
             </div>
         </div>
@@ -241,7 +308,7 @@
                 
                 <a href="#" onclick="showSection('university')" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/>
+                        <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3z"/>
                     </svg>
                     <span>University Prep</span>
                 </a>
@@ -324,7 +391,7 @@
                                     </div>
                                     <div class="hidden md:block text-left">
                                         <p class="text-sm font-medium text-gray-700" id="headerUserName">Principal</p>
-                                        <p class="text-xs text-gray-500">Administrator</p>
+                                        <p class="text-xs text-gray-500">Akhuwat Family</p>
                                     </div>
                                     <svg class="w-4 h-4 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
@@ -354,8 +421,8 @@
                     <div class="gradient-bg rounded-2xl p-8 mb-8 text-white fade-in">
                         <div class="flex flex-col md:flex-row items-center justify-between">
                             <div class="mb-6 md:mb-0">
-                                <h2 class="text-3xl md:text-4xl font-bold mb-2">Welcome Back, Principal!</h2>
-                                <p class="text-lg opacity-90">Manage your college efficiently with our comprehensive system</p>
+                                <h2 class="text-3xl md:text-4xl font-bold mb-2">Welcome to the Akhuwat Academic Management System</h2>
+                                <p class="text-lg opacity-90">Built on the spirit of Akhuwat, Iman, Ihsan, Ikhlas, and Infaq</p>
                                 <div class="mt-4 flex flex-wrap gap-2">
                                     <span class="px-3 py-1 bg-white bg-opacity-20 rounded-full text-sm">📚 Academic Excellence</span>
                                     <span class="px-3 py-1 bg-white bg-opacity-20 rounded-full text-sm">🎓 Student Success</span>
@@ -577,7 +644,8 @@
                             <select id="houseFilter" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" onchange="filterStudents()">
                                 <option value="">All Houses</option>
                                 <option value="Ikhlas">Ikhlas</option>
-                                <option value="Ihsaan">Ihsaan</option>
+                                <option value="Infaq">Infaq</option>
+
                             </select>
                         </div>
 
@@ -586,7 +654,7 @@
                             <table class="w-full table-auto">
                                 <thead class="bg-gradient-to-r from-blue-500 to-purple-600 text-white">
                                     <tr>
-                                        <th class="px-4 py-3 text-left text-sm font-medium">College No.</th>
+                                        <th class="px-4 py-3 text-left text-sm font-medium">Clg.No.</th>
                                         <th class="px-4 py-3 text-left text-sm font-medium">Name</th>
                                         <th class="px-4 py-3 text-left text-sm font-medium">Father Name</th>
                                         <th class="px-4 py-3 text-left text-sm font-medium">Class</th>
@@ -728,7 +796,7 @@
                             <table class="w-full table-auto">
                                 <thead class="bg-gradient-to-r from-red-500 to-orange-600 text-white">
                                     <tr>
-                                        <th class="px-4 py-3 text-left text-sm font-medium">College No.</th>
+                                        <th class="px-4 py-3 text-left text-sm font-medium">Clg.No.</th>
                                         <th class="px-4 py-3 text-left text-sm font-medium">Name</th>
                                         <th class="px-4 py-3 text-left text-sm font-medium">Class</th>
                                         <th class="px-4 py-3 text-left text-sm font-medium">Warning Level</th>
@@ -849,7 +917,7 @@
                             <table class="w-full table-auto">
                                 <thead class="bg-gradient-to-r from-blue-500 to-purple-600 text-white">
                                     <tr>
-                                        <th class="px-4 py-3 text-left text-sm font-medium">College No.</th>
+                                        <th class="px-4 py-3 text-left text-sm font-medium">Clg.No.</th>
                                         <th class="px-4 py-3 text-left text-sm font-medium">Student Name</th>
                                         <th class="px-4 py-3 text-left text-sm font-medium">Class</th>
                                         <th class="px-4 py-3 text-left text-sm font-medium">Subject</th>
@@ -1210,7 +1278,7 @@
                             <table class="w-full table-auto">
                                 <thead class="bg-gradient-to-r from-blue-500 to-purple-600 text-white">
                                     <tr>
-                                        <th class="px-4 py-3 text-left text-sm font-medium">College No.</th>
+                                        <th class="px-4 py-3 text-left text-sm font-medium">Clg.No.</th>
                                         <th class="px-4 py-3 text-left text-sm font-medium">Name</th>
                                         <th class="px-4 py-3 text-left text-sm font-medium">Class</th>
                                         <th class="px-4 py-3 text-left text-sm font-medium">University</th>
@@ -1340,11 +1408,11 @@
                             </select>
                             <select id="alumniYearFilter" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" onchange="filterAlumni()">
                                 <option value="">All Years</option>
+                                <option value="2025">2025</option>
+                                <option value="2024">2024</option>
                                 <option value="2023">2023</option>
                                 <option value="2022">2022</option>
                                 <option value="2021">2021</option>
-                                <option value="2020">2020</option>
-                                <option value="2019">2019</option>
                             </select>
                         </div>
                         
@@ -1353,7 +1421,7 @@
                             <table class="w-full table-auto">
                                 <thead class="bg-gradient-to-r from-green-500 to-blue-600 text-white">
                                     <tr>
-                                        <th class="px-4 py-3 text-left text-sm font-medium">College No.</th>
+                                        <th class="px-4 py-3 text-left text-sm font-medium">Clg.No.</th>
                                         <th class="px-4 py-3 text-left text-sm font-medium">Name</th>
                                         <th class="px-4 py-3 text-left text-sm font-medium">Group</th>
                                         <th class="px-4 py-3 text-left text-sm font-medium">Graduation Year</th>
@@ -1506,8 +1574,8 @@
                             <div class="stats-card rounded-xl p-6 hover-lift">
                                 <div class="flex items-center justify-between">
                                     <div>
-                                        <p class="text-sm font-medium text-gray-600">Ihsaan House</p>
-                                        <p class="text-3xl font-bold text-purple-600" id="ihsaanHouseCount">0</p>
+                                        <p class="text-sm font-medium text-gray-600">Infaq House</p>
+                                        <p class="text-3xl font-bold text-purple-600" id="infaqHouseCount">0</p>
                                     </div>
                                     <div class="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center">
                                         <span class="text-white text-sm font-bold">H</span>
@@ -1557,23 +1625,23 @@
                                 </div>
                                 
                                 <div class="bg-white p-6 rounded-lg border-l-4 border-purple-500">
-                                    <h4 class="font-semibold text-purple-700 mb-3">Ihsaan House</h4>
+                                    <h4 class="font-semibold text-purple-700 mb-3">Infaq House</h4>
                                     <div class="space-y-2">
                                         <div class="flex justify-between">
                                             <span class="text-sm text-gray-600">Total Students:</span>
-                                            <span class="text-sm font-medium" id="ihsaanTotal">0</span>
+                                            <span class="text-sm font-medium" id="infaqTotal">0</span>
                                         </div>
                                         <div class="flex justify-between">
                                             <span class="text-sm text-gray-600">1st Year:</span>
-                                            <span class="text-sm font-medium" id="ihsaan1stYear">0</span>
+                                            <span class="text-sm font-medium" id="infaq1stYear">0</span>
                                         </div>
                                         <div class="flex justify-between">
                                             <span class="text-sm text-gray-600">2nd Year:</span>
-                                            <span class="text-sm font-medium" id="ihsaan2ndYear">0</span>
+                                            <span class="text-sm font-medium" id="infaq2ndYear">0</span>
                                         </div>
                                         <div class="flex justify-between">
                                             <span class="text-sm text-gray-600">Avg Attendance:</span>
-                                            <span class="text-sm font-medium" id="ihsaanAttendance">0%</span>
+                                            <span class="text-sm font-medium" id="infaqAttendance">0%</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1586,7 +1654,7 @@
                             <select id="hostelHouseFilter" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" onchange="filterHostelStudents()">
                                 <option value="">All Houses</option>
                                 <option value="Ikhlas">Ikhlas</option>
-                                <option value="Ihsaan">Ihsaan</option>
+                                <option value="Infaq">Infaq</option>
                             </select>
                             <select id="hostelClassFilter" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" onchange="filterHostelStudents()">
                                 <option value="">All Classes</option>
@@ -1604,7 +1672,7 @@
                             <table class="w-full table-auto">
                                 <thead class="bg-gradient-to-r from-purple-500 to-blue-600 text-white">
                                     <tr>
-                                        <th class="px-4 py-3 text-left text-sm font-medium">College No.</th>
+                                        <th class="px-4 py-3 text-left text-sm font-medium">Clg.No.</th>
                                         <th class="px-4 py-3 text-left text-sm font-medium">Name</th>
                                         <th class="px-4 py-3 text-left text-sm font-medium">Class</th>
                                         <th class="px-4 py-3 text-left text-sm font-medium">House</th>
@@ -1669,7 +1737,7 @@
                             <select name="house" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
                                 <option value="">Select House</option>
                                 <option value="Ikhlas">Ikhlas</option>
-                                <option value="Ihsaan">Ihsaan</option>
+                                <option value="Infaq">Infaq</option>
                             </select>
                         </div>
                         <div>
@@ -2247,6 +2315,8 @@
                             <label class="block text-sm font-medium text-gray-700 mb-2">Graduation Year</label>
                             <select name="graduationYear" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
                                 <option value="">Select Year</option>
+                                <option value="2025">2025</option>
+                                <option value="2024">2024</option>
                                 <option value="2023">2023</option>
                                 <option value="2022">2022</option>
                                 <option value="2021">2021</option>
@@ -2254,8 +2324,6 @@
                                 <option value="2019">2019</option>
                                 <option value="2018">2018</option>
                                 <option value="2017">2017</option>
-                                <option value="2016">2016</option>
-                                <option value="2015">2015</option>
                             </select>
                         </div>
                         <div>
@@ -2332,7 +2400,7 @@
                             <select name="house" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
                                 <option value="">Select House</option>
                                 <option value="Ikhlas">Ikhlas</option>
-                                <option value="Ihsaan">Ihsaan</option>
+                                <option value="Infaq">Infaq</option>
                             </select>
                         </div>
                         <div>
@@ -2378,12 +2446,75 @@
         let attendanceRecords = [];
         let alumni = [];
         let hostelStudents = [];
+        let users = [];
 
         // Initialize app
         document.addEventListener('DOMContentLoaded', function() {
-            loadSampleData();
+            loadDataFromStorage();
             setupEventListeners();
+            checkUserSession();
         });
+
+        // Data persistence functions
+        function saveDataToStorage() {
+            const data = {
+                students,
+                teachers,
+                warnings,
+                universityApplications,
+                timetables,
+                results,
+                exams,
+                attendanceRecords,
+                alumni,
+                hostelStudents,
+                users,
+                currentUser,
+                currentUserRole
+            };
+            localStorage.setItem('collegeManagementData', JSON.stringify(data));
+        }
+
+        function loadDataFromStorage() {
+            const savedData = localStorage.getItem('collegeManagementData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                students = data.students || [];
+                teachers = data.teachers || [];
+                warnings = data.warnings || [];
+                universityApplications = data.universityApplications || [];
+                timetables = data.timetables || [];
+                results = data.results || [];
+                exams = data.exams || [];
+                attendanceRecords = data.attendanceRecords || [];
+                alumni = data.alumni || [];
+                hostelStudents = data.hostelStudents || [];
+                users = data.users || [];
+                currentUser = data.currentUser || null;
+                currentUserRole = data.currentUserRole || null;
+            } else {
+                loadSampleData();
+            }
+        }
+
+        function checkUserSession() {
+            if (currentUser && currentUserRole) {
+                // User is logged in, show dashboard
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                document.getElementById('dashboard').classList.remove('hidden');
+                document.getElementById('sidebar').classList.remove('hidden');
+                
+                // Update user info in UI
+                document.getElementById('sidebarUserName').textContent = currentUser;
+                document.getElementById('headerUserName').textContent = currentUser;
+                document.getElementById('userInitials').textContent = currentUser.charAt(0);
+                
+                // Show dashboard section by default
+                showSection('dashboard');
+                updateDashboardStats();
+            }
+        }
 
         function setupEventListeners() {
             // Mobile menu toggle
@@ -2452,39 +2583,49 @@
             }
         }
 
+        // Auth tab functions
+        function showAuthTab(tabName) {
+            // Update tabs
+            document.querySelectorAll('.auth-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.auth-form').forEach(form => {
+                form.classList.remove('active');
+            });
+            
+            // Activate selected tab
+            document.querySelector(`.auth-tab:nth-child(${tabName === 'login' ? 1 : 2})`).classList.add('active');
+            document.getElementById(`${tabName}Form`).classList.add('active');
+        }
+
         // Login functionality
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value.trim();
-            const role = document.getElementById('role').value;
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+            const role = document.getElementById('loginRole').value;
 
-            if (!username) {
-                alert('Please enter a username');
+            if (!username || !password) {
+                alert('Please enter both username and password');
                 return;
             }
 
-            // Check if user exists in localStorage
-            const storedPassword = localStorage.getItem(`user_${username}_${role}`);
-            
-            if (storedPassword === null) {
-                // First time user - create new password
-                if (!password) {
-                    alert('Please create a new password for your account');
-                    return;
-                }
-                localStorage.setItem(`user_${username}_${role}`, password);
-                alert('Account created successfully! You can now login with these credentials.');
-            } else {
-                // Existing user - verify password
-                if (password !== storedPassword) {
-                    alert('Invalid password. Please try again.');
-                    return;
-                }
+            // Check if user exists
+            const user = users.find(u => u.username === username && u.role === role);
+            if (!user) {
+                alert('User not found. Please check your credentials or sign up.');
+                return;
+            }
+
+            // Verify password
+            if (user.password !== password) {
+                alert('Invalid password. Please try again.');
+                return;
             }
             
-            currentUser = username.charAt(0).toUpperCase() + username.slice(1);
-            currentUserRole = role;
+            // Login successful
+            currentUser = user.name;
+            currentUserRole = user.role;
             
             // Update user info in UI
             document.getElementById('sidebarUserName').textContent = currentUser;
@@ -2500,6 +2641,62 @@
             // Show dashboard section by default
             showSection('dashboard');
             updateDashboardStats();
+            
+            // Save data to localStorage
+            saveDataToStorage();
+            
+            alert(`Welcome back, ${currentUser}!`);
+        });
+
+        // Signup functionality
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('signupName').value.trim();
+            const username = document.getElementById('signupUsername').value.trim();
+            const password = document.getElementById('signupPassword').value.trim();
+            const confirmPassword = document.getElementById('signupConfirmPassword').value.trim();
+            const role = document.getElementById('signupRole').value;
+
+            if (!name || !username || !password || !confirmPassword) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match');
+                return;
+            }
+
+            // Check if username already exists
+            const existingUser = users.find(u => u.username === username);
+            if (existingUser) {
+                alert('Username already exists. Please choose a different username.');
+                return;
+            }
+
+            // Create new user
+            const newUser = {
+                id: Date.now(),
+                name: name,
+                username: username,
+                password: password,
+                role: role,
+                createdAt: new Date().toISOString()
+            };
+
+            users.push(newUser);
+            
+            // Switch to login tab
+            showAuthTab('login');
+            
+            // Pre-fill login form
+            document.getElementById('loginUsername').value = username;
+            document.getElementById('loginRole').value = role;
+            
+            // Save data to localStorage
+            saveDataToStorage();
+            
+            alert('Account created successfully! You can now login.');
         });
 
         // Logout functionality
@@ -2511,6 +2708,9 @@
                 document.getElementById('dashboard').style.display = 'none';
                 document.getElementById('sidebar').classList.add('hidden');
                 document.getElementById('loginForm').reset();
+                
+                // Save data to localStorage
+                saveDataToStorage();
             }
         }
 
@@ -2585,10 +2785,36 @@
                 case 'teachers':
                     displayTeachers();
                     updateTeacherStats();
+                    populateTeacherSelect();
                     break;
                 case 'university':
                     displayUniversityApplications();
                     updateUniversityStats();
+                    break;
+                case 'results':
+                    displayResults();
+                    updateResultStats();
+                    break;
+                case 'attendance':
+                    updateAttendanceStats();
+                    // Set today's date by default
+                    document.getElementById('attendanceDate').value = new Date().toISOString().split('T')[0];
+                    // Load all students by default
+                    setTimeout(() => {
+                        loadClassAttendance();
+                    }, 100);
+                    break;
+                case 'exams':
+                    displayExams();
+                    updateExamStats();
+                    break;
+                case 'alumni':
+                    displayAlumni();
+                    updateAlumniStats();
+                    break;
+                case 'hostel':
+                    displayHostelStudents();
+                    updateHostelStats();
                     break;
                 case 'timetable':
                     // Timetable loads on demand
@@ -2670,6 +2896,9 @@
             updateDashboardStats();
             closeModal('addStudentModal');
             resetStudentForm();
+            
+            // Save data to localStorage
+            saveDataToStorage();
         });
 
         // Warning system
@@ -2715,6 +2944,9 @@
             updateWarningStats();
             closeModal('addWarningModal');
             e.target.reset();
+            
+            // Save data to localStorage
+            saveDataToStorage();
         });
 
         // Teacher management
@@ -2748,6 +2980,9 @@
             closeModal('addTeacherModal');
             e.target.reset();
             alert('Teacher added successfully!');
+            
+            // Save data to localStorage
+            saveDataToStorage();
         });
 
         // University management
@@ -2777,6 +3012,9 @@
             closeModal('addUniversityModal');
             e.target.reset();
             alert('University application added successfully!');
+            
+            // Save data to localStorage
+            saveDataToStorage();
         });
 
         function displayStudents() {
@@ -2975,6 +3213,9 @@
                 displayStudents();
                 updateDashboardStats();
                 alert('Student deleted successfully!');
+                
+                // Save data to localStorage
+                saveDataToStorage();
             }
             document.getElementById(`studentMenu${studentId}`).classList.add('hidden');
         }
@@ -3074,6 +3315,9 @@
                 displayWarnings();
                 updateWarningStats();
                 alert('Warning deleted successfully!');
+                
+                // Save data to localStorage
+                saveDataToStorage();
             }
         }
 
@@ -3208,6 +3452,9 @@
                 displayTeachers();
                 updateTeacherStats();
                 alert('Teacher deleted successfully!');
+                
+                // Save data to localStorage
+                saveDataToStorage();
             }
         }
 
@@ -3307,6 +3554,9 @@
                 displayUniversityApplications();
                 updateUniversityStats();
                 alert('University application deleted successfully!');
+                
+                // Save data to localStorage
+                saveDataToStorage();
             }
         }
 
@@ -3435,6 +3685,9 @@
             
             timetables.push({...currentTimetable});
             alert('Timetable saved successfully!');
+            
+            // Save data to localStorage
+            saveDataToStorage();
         }
 
         function showTimetableHistory() {
@@ -3485,6 +3738,7 @@
             attendanceRecords = [];
             alumni = [];
             hostelStudents = [];
+            users = [];
         }
 
         // Timetable functions
@@ -3537,6 +3791,9 @@
             document.getElementById('uploadArea').classList.remove('hidden');
             document.getElementById('imagePreview').classList.add('hidden');
             alert('Timetable uploaded successfully!');
+            
+            // Save data to localStorage
+            saveDataToStorage();
         });
 
         document.getElementById('createTimetableForm').addEventListener('submit', function(e) {
@@ -3658,6 +3915,9 @@
             closeModal('addResultModal');
             e.target.reset();
             alert('Result added successfully!');
+            
+            // Save data to localStorage
+            saveDataToStorage();
         });
 
         function displayResults() {
@@ -3795,6 +4055,9 @@
                 displayResults();
                 updateResultStats();
                 alert('Result deleted successfully!');
+                
+                // Save data to localStorage
+                saveDataToStorage();
             }
         }
 
@@ -3954,6 +4217,9 @@
             
             attendanceRecords.push(attendanceRecord);
             updateAttendanceStats();
+            
+            // Save data to localStorage
+            saveDataToStorage();
         }
 
         function updateLiveAttendanceStats() {
@@ -4055,6 +4321,9 @@
             updateAttendanceStats();
             if (savedCount > 0) {
                 showNotification(`Attendance saved for ${savedCount} student entries`, 'success');
+                
+                // Save data to localStorage
+                saveDataToStorage();
             } else {
                 alert('No attendance data to save. Please mark attendance using P, A, or L.');
             }
@@ -4152,6 +4421,9 @@
             closeModal('addExamModal');
             e.target.reset();
             alert('Exam scheduled successfully!');
+            
+            // Save data to localStorage
+            saveDataToStorage();
         });
 
         function displayExams() {
@@ -4289,6 +4561,9 @@
                 displayExams();
                 updateExamStats();
                 alert('Exam deleted successfully!');
+                
+                // Save data to localStorage
+                saveDataToStorage();
             }
         }
 
@@ -4321,6 +4596,9 @@
             closeModal('addStudentUniModal');
             e.target.reset();
             alert('Student added to university program successfully!');
+            
+            // Save data to localStorage
+            saveDataToStorage();
         });
 
         // Add Alumni Form Handler
@@ -4350,6 +4628,9 @@
             closeModal('addAlumniModal');
             e.target.reset();
             alert('Alumni record added successfully!');
+            
+            // Save data to localStorage
+            saveDataToStorage();
         });
 
         // Add Hostel Student Form Handler
@@ -4397,6 +4678,9 @@
             closeModal('addHostelStudentModal');
             e.target.reset();
             alert('Student added to hostel successfully!');
+            
+            // Save data to localStorage
+            saveDataToStorage();
         });
 
         // Alumni Functions
@@ -4555,6 +4839,9 @@
                 displayAlumni();
                 updateAlumniStats();
                 alert('Alumni record deleted successfully!');
+                
+                // Save data to localStorage
+                saveDataToStorage();
             }
         }
 
@@ -4616,14 +4903,14 @@
         function updateHostelStats() {
             const totalHostelStudents = hostelStudents.length;
             const ikhlasStudents = hostelStudents.filter(h => h.house === 'Ikhlas');
-            const ihsaanStudents = hostelStudents.filter(h => h.house === 'Ihsaan');
+            const infaqStudents = hostelStudents.filter(h => h.house === 'Infaq');
             
             const avgAttendance = totalHostelStudents > 0 ? 
                 Math.round(hostelStudents.reduce((sum, h) => sum + h.attendancePercentage, 0) / totalHostelStudents) : 0;
             
             document.getElementById('totalHostelStudents').textContent = totalHostelStudents;
             document.getElementById('ikhlasHouseCount').textContent = ikhlasStudents.length;
-            document.getElementById('ihsaanHouseCount').textContent = ihsaanStudents.length;
+            document.getElementById('infaqHouseCount').textContent = infaqStudents.length;
             document.getElementById('hostelAvgAttendance').textContent = avgAttendance + '%';
             
             // House-wise detailed stats
@@ -4632,20 +4919,20 @@
             const ikhlasAvgAttendance = ikhlasStudents.length > 0 ? 
                 Math.round(ikhlasStudents.reduce((sum, h) => sum + h.attendancePercentage, 0) / ikhlasStudents.length) : 0;
             
-            const ihsaan1stYear = ihsaanStudents.filter(h => h.studentClass.includes('-I')).length;
-            const ihsaan2ndYear = ihsaanStudents.filter(h => h.studentClass.includes('-II')).length;
-            const ihsaanAvgAttendance = ihsaanStudents.length > 0 ? 
-                Math.round(ihsaanStudents.reduce((sum, h) => sum + h.attendancePercentage, 0) / ihsaanStudents.length) : 0;
+            const infaq1stYear = infaqStudents.filter(h => h.studentClass.includes('-I')).length;
+            const infaq2ndYear = infaqStudents.filter(h => h.studentClass.includes('-II')).length;
+            const infaqAvgAttendance = infaqStudents.length > 0 ? 
+                Math.round(infaqStudents.reduce((sum, h) => sum + h.attendancePercentage, 0) / infaqStudents.length) : 0;
             
             document.getElementById('ikhlasTotal').textContent = ikhlasStudents.length;
             document.getElementById('ikhlas1stYear').textContent = ikhlas1stYear;
             document.getElementById('ikhlas2ndYear').textContent = ikhlas2ndYear;
             document.getElementById('ikhlasAttendance').textContent = ikhlasAvgAttendance + '%';
             
-            document.getElementById('ihsaanTotal').textContent = ihsaanStudents.length;
-            document.getElementById('ihsaan1stYear').textContent = ihsaan1stYear;
-            document.getElementById('ihsaan2ndYear').textContent = ihsaan2ndYear;
-            document.getElementById('ihsaanAttendance').textContent = ihsaanAvgAttendance + '%';
+            document.getElementById('infaqTotal').textContent = infaqStudents.length;
+            document.getElementById('infaq1stYear').textContent = infaq1stYear;
+            document.getElementById('infaq2ndYear').textContent = infaq2ndYear;
+            document.getElementById('infaqAttendance').textContent = infaqAvgAttendance + '%';
         }
 
         function filterHostelStudents() {
@@ -4731,59 +5018,9 @@
                 displayHostelStudents();
                 updateHostelStats();
                 alert('Student removed from hostel successfully!');
-            }
-        }
-
-        // Update loadSectionData function
-        function loadSectionData(sectionName) {
-            switch(sectionName) {
-                case 'dashboard':
-                    updateDashboardStats();
-                    break;
-                case 'students':
-                    displayStudents();
-                    break;
-                case 'warnings':
-                    displayWarnings();
-                    updateWarningStats();
-                    break;
-                case 'teachers':
-                    displayTeachers();
-                    updateTeacherStats();
-                    populateTeacherSelect();
-                    break;
-                case 'university':
-                    displayUniversityApplications();
-                    updateUniversityStats();
-                    break;
-                case 'results':
-                    displayResults();
-                    updateResultStats();
-                    break;
-                case 'attendance':
-                    updateAttendanceStats();
-                    // Set today's date by default
-                    document.getElementById('attendanceDate').value = new Date().toISOString().split('T')[0];
-                    // Load all students by default
-                    setTimeout(() => {
-                        loadClassAttendance();
-                    }, 100);
-                    break;
-                case 'exams':
-                    displayExams();
-                    updateExamStats();
-                    break;
-                case 'alumni':
-                    displayAlumni();
-                    updateAlumniStats();
-                    break;
-                case 'hostel':
-                    displayHostelStudents();
-                    updateHostelStats();
-                    break;
-                case 'timetable':
-                    // Timetable loads on demand
-                    break;
+                
+                // Save data to localStorage
+                saveDataToStorage();
             }
         }
 
@@ -4805,5 +5042,5 @@
             }, 3000);
         }
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'989a306ed07e9083',t:'MTc1OTYzODY4NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
